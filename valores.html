@@ -27,7 +27,7 @@
             </div>
             <br>
             <div class="w3-container w3-blue">
-                <h2>Lista</h2>
+                <h2>Lista <span id="contador">0</span></h2>
             </div>
             <div class="w3-container w3-card-4">
                 <br>
@@ -49,6 +49,7 @@
         <script>
         
 var datos,pos1,pos2;
+var contador = 0;;
 var element1 = document.getElementById("valor1");
 var element2 = document.getElementById("valor2");
 
@@ -56,6 +57,7 @@ function iniciar(){
     let str = localStorage.getItem("datos");
     if(str){
         datos = JSON.parse(str);
+        contador = parseInt(localStorage.getItem("contador"),10);
     } else {
         let valorestr = "Veracidad,Creatividad,Honestidad,Determinación,Justicia,Confianza,Reflexión,Modales,Cuidado de salud,Utilidad,";
         valorestr += "Responsabilidad,Independencia,Perserverancia,Coraje,Amabilidad,Amistad,Perdón,Generosidad,Compasión,Tolerancia,";
@@ -67,7 +69,7 @@ function iniciar(){
         for(let i=0;i<len;i++){
             datos.push({
                 valor:valorevec[i],
-                puntaje: 1
+                puntaje: 1000
             });
         }
     }
@@ -90,16 +92,18 @@ document.getElementById("elegir").onclick = function(){
     }
     let res = item.value;
     if(res === "uno"){
-        datos[pos1].puntaje += 0.01;
-        datos[pos2].puntaje -= 0.01;
+        datos[pos1].puntaje += 1;
+        datos[pos2].puntaje -= 1;
     } else {
-        datos[pos2].puntaje += 0.01;
-        datos[pos1].puntaje -= 0.01;
+        datos[pos2].puntaje += 1;
+        datos[pos1].puntaje -= 1;
     }
+    contador++;
     datos.sort((a,b)=>{
         return (a.puntaje < b.puntaje)?+1:-1;
     });
     localStorage.setItem("datos",JSON.stringify(datos));
+    localStorage.setItem("contador",contador);
     document.querySelector('input[name="valor"]:checked').checked = false;
     listar();
     jugar();
@@ -107,9 +111,10 @@ document.getElementById("elegir").onclick = function(){
 function listar(){
     let lista = "";
     for(let i=0;i<5;i++){
-        lista += `<li>${datos[i].valor}</li>`;
+        lista += `<li>${datos[i].valor} (${datos[i].puntaje})</li>`;
     }
     document.getElementById("lista").innerHTML = lista;
+    document.getElementById("contador").innerHTML = contador;
 }
 document.getElementById("borrar").onclick = function(){
     localStorage.removeItem("datos");
