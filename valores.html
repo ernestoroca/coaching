@@ -76,8 +76,10 @@ function iniciar(){
 }
 function jugar(){
     let len = datos.length;
-    pos1 = Math.floor(Math.random()*len/2);
-    pos2 = len/2 + Math.floor(Math.random()*len/2);
+    let len1 = Math.floor(Math.random()*len/2);
+    
+    pos1 = Math.floor(Math.random()*len1);
+    pos2 = len1 + Math.floor(Math.random()*(len-len1);
     
     element1.innerText = datos[pos1].valor;
     element2.innerText = datos[pos2].valor;
@@ -110,7 +112,7 @@ function listar(){
     }
     document.getElementById("lista").innerHTML = lista;
 }
-document.getElementById("elegir").onclick = function(){
+document.getElementById("borrar").onclick = function(){
     localStorage.removeItem("datos");
     iniciar();
 };
