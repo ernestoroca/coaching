@@ -76,10 +76,9 @@ function iniciar(){
 }
 function jugar(){
     let len = datos.length;
-    let len1 = Math.floor(Math.random()*len/2);
-    
-    pos1 = Math.floor(Math.random()*len1);
-    pos2 = len1 + Math.floor(Math.random()*(len-len1);
+    let len2 = Math.floor(len/2)
+    pos1 = Math.floor(Math.random()*len2);
+    pos2 = len2 + Math.floor(Math.random()*(len-len2));
     
     element1.innerText = datos[pos1].valor;
     element2.innerText = datos[pos2].valor;
