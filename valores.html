@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Valores</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body onload="iniciar();">
+        <div class="w3-container">
+            <div class="w3-container w3-blue">
+                <h2>Valor vs Valor</h2>
+            </div>
+            <div class="w3-container w3-card-4">
+                <p>
+                    <input class="w3-radio" type="radio" name="valor" value="uno">
+                    <label><span id="valor1"></span></label>
+                </p>
+                <p>
+                    <input class="w3-radio" type="radio" name="valor" value="dos">
+                    <label><span id="valor2"></span></label>
+                </p>
+                <button class="w3-btn w3-blue w3-xlarge" id="elegir">
+                    <i class="w3-margin-center fa fa-arrow-right"></i>
+                </button>
+                <br><br>
+            </div>
+            <br>
+            <div class="w3-container w3-blue">
+                <h2>Lista</h2>
+            </div>
+            <div class="w3-container w3-card-4">
+                <br>
+                <ul class="w3-ul w3-border" id="lista">
+                </ul>
+                <br>
+            </div>
+            <div class="w3-container">
+                <div class="w3-row">
+                    <div class="w3-col s9">&nbsp;</div>
+                    <div class="w3-col s3">
+                        <button class="w3-btn w3-blue w3-xlarge" id="borrar">
+                            <i class="w3-margin-center fa fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        
+var datos,pos1,pos2;
+var element1 = document.getElementById("valor1");
+var element2 = document.getElementById("valor2");
+
+function iniciar(){
+    let str = localStorage.getItem("datos");
+    if(str){
+        datos = JSON.parse(str);
+    } else {
+        let valorestr = "Abnegación,Agradecimiento,Amabilidad,Aprendizaje,Aprovechamiento,Arrepentimiento,Autodisciplina,Autoestima";
+        let valorevec = valorestr.split(",");
+        let len = valorevec.length;
+        datos = [];
+        for(let i=0;i<len;i++){
+            datos.push({
+                valor:valorevec[i],
+                puntaje: 1
+            });
+        }
+    }
+    listar();
+    jugar();
+}
+function jugar(){
+    let len = datos.length;
+    pos1 = Math.floor(Math.random()*len/2);
+    pos2 = len/2 + Math.floor(Math.random()*len/2);
+    
+    element1.innerText = datos[pos1].valor;
+    element2.innerText = datos[pos2].valor;
+}
+document.getElementById("elegir").onclick = function(){
+    let item = document.querySelector('input[name="valor"]:checked');
+    if(!item){
+        return;
+    }
+    let res = item.value;
+    if(res === "uno"){
+        datos[pos1].puntaje += 0.01;
+        datos[pos2].puntaje -= 0.01;
+    } else {
+        datos[pos2].puntaje += 0.01;
+        datos[pos1].puntaje -= 0.01;
+    }
+    datos.sort((a,b)=>{
+        return (a.puntaje < b.puntaje)?+1:-1;
+    });
+    localStorage.setItem("datos",JSON.stringify(datos));
+    document.querySelector('input[name="valor"]:checked').checked = false;
+    listar();
+    jugar();
+}
+function listar(){
+    let lista = "";
+    for(let i=0;i<5;i++){
+        lista += `<li>${datos[i].valor}</li>`;
+    }
+    document.getElementById("lista").innerHTML = lista;
+}
+document.getElementById("elegir").onclick = function(){
+    localStorage.removeItem("datos");
+    iniciar();
+};
+        </script>
+    </body>
+</html>
