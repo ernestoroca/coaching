@@ -69,7 +69,7 @@ function iniciar(){
         for(let i=0;i<len;i++){
             datos.push({
                 valor:valorevec[i],
-                puntaje: 1000
+                puntaje: 0
             });
         }
     }
@@ -77,10 +77,8 @@ function iniciar(){
     jugar();
 }
 function jugar(){
-    let len = datos.length;
-    let len2 = Math.floor(len/2)
-    pos1 = Math.floor(Math.random()*len2);
-    pos2 = len2 + Math.floor(Math.random()*(len-len2));
+    pos1 = Math.floor(Math.random()*5);
+    pos2 = 5 + Math.floor(Math.random()*5);
     
     element1.innerText = datos[pos1].valor;
     element2.innerText = datos[pos2].valor;
