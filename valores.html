@@ -78,7 +78,7 @@ function iniciar(){
 }
 function jugar(){
     pos1 = Math.floor(Math.random()*5);
-    pos2 = 5 + Math.floor(Math.random()*5);
+    pos2 = 5 + Math.floor(Math.random()*10);
     
     element1.innerText = datos[pos1].valor;
     element2.innerText = datos[pos2].valor;
@@ -90,11 +90,11 @@ document.getElementById("elegir").onclick = function(){
     }
     let res = item.value;
     if(res === "uno"){
-        datos[pos1].puntaje += 1;
-        datos[pos2].puntaje -= 1;
+        datos[pos1].puntaje++;
+        datos[pos2].puntaje--;
     } else {
-        datos[pos2].puntaje += 1;
-        datos[pos1].puntaje -= 1;
+        datos[pos2].puntaje++;
+        datos[pos1].puntaje--;
     }
     contador++;
     datos.sort((a,b)=>{
